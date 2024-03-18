@@ -8,7 +8,7 @@ phases:
   build:
     commands:
       - echo "Zipping deployment package..."
-      - zip -9 -r deployment_package.zip lambda_function.py backoff certifi idna marketorestpython-0.5.23-py3.6.egg-info requests-2.27.1.dist-info backoff-1.11.1.dist-info certifi-2024.2.2.dist-info idna-3.6.dist-info pytz charset_normalizer pytz-2024.1.dist-info urllib3 charset_normalizer-2.0.12.dist-info marketorestpython requests urllib3-1.26.18.dist-info
+      - zip -9 -r deployment_package.zip lambda_function.py backoff backoff-2.2.1.dist-info bin certifi certifi-2024.2.2.dist-info charset_normalizer charset_normalizer-3.3.2.dist-info idna idna-3.6.dist-info marketorestpython marketorestpython-0.5.23-py3.11.egg-info pytz pytz-2024.1.dist-info requests requests-2.31.0.dist-info urllib3	urllib3-2.2.1.dist-info
   post_build:
     commands:
       - echo "Updating lambda Function..."
