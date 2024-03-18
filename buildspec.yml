@@ -13,4 +13,4 @@ phases:
     commands:
       - echo "Updating lambda Function..."
       - aws lambda update-function-code --function-name email-pref-marketo-dupes --zip-file fileb://deployment_package.zip
-      - echo "DONE!"
+      - echo "DONE!!"
