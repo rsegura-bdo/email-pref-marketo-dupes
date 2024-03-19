@@ -33,6 +33,7 @@ def syncDuplicates(mc:MarketoClient, email_pref:dict)->None:
     # build list of fields to extract
     fields = [k for k in email_pref.keys() if k not in ('record_saved_date')]
     dupes = extractLeadsByEmailAddress(mc, email_pref["email"], fields)
+    logger.info(f'({email_pref["email"]}: {len(dupes)}) records found/extracted')
 
     # find duplicate records that need updates
     dupes_to_update = getLeadsToUpdate(email_pref, dupes)
@@ -56,7 +57,6 @@ def extractLeadsByEmailAddress(mc:MarketoClient, email_address:str, fields:list)
         logger.error(f'method: extractLeadsByEmailAddress()\n error: {str(e)}')
         raise e
     
-    
     return leads
 
 
@@ -70,7 +70,6 @@ def getLeadsToUpdate(email_preferences:dict, leads:list)->list:
     """
 
     logger.info(f'{email_preferences=}')
-    logger.info(f'{leads=}')
 
 
 
