@@ -32,13 +32,16 @@ def syncDuplicates(mc:MarketoClient, email_pref:dict)->None:
     
     # build list of fields to extract
     fields = [k for k in email_pref.keys() if k not in ('record_saved_date')]
-    extractLeadsByEmailAddress(mc, email_pref["email"], fields)
+    dupes = extractLeadsByEmailAddress(mc, email_pref["email"], fields)
+
+    # find duplicate records that need updates
+    dupes_to_update = getLeadsToUpdate(email_pref, dupes)
 
 
 
 def extractLeadsByEmailAddress(mc:MarketoClient, email_address:str, fields:list) -> list:
     """ 
-    Export leads owith matching email addresses
+    Export leads with matching email addresses
 
     :param mc: Marketo class object
     :param email_address: email address to filter on
@@ -46,8 +49,6 @@ def extractLeadsByEmailAddress(mc:MarketoClient, email_address:str, fields:list)
     :return List of dictionaries
     """
 
-    logger.info(f'{email_address=}')
-    logger.info(f'{fields=}')
     try:
         leads = mc.execute(method='get_multiple_leads_by_filter_type', filterType='email', 
                             filterValues=email_address, fields=fields)
@@ -55,8 +56,22 @@ def extractLeadsByEmailAddress(mc:MarketoClient, email_address:str, fields:list)
         logger.error(f'method: extractLeadsByEmailAddress()\n error: {str(e)}')
         raise e
     
-    logger.info(f'{leads=}')
+    
     return leads
+
+
+def getLeadsToUpdate(email_preferences:dict, leads:list)->list:
+    """ 
+    Export leads with matching email addresses
+
+    :param email_preferences: master values of email preferences
+    :param field: list of fields to extract
+    :return List of dictionaries
+    """
+
+    logger.info(f'{email_preferences=}')
+    logger.info(f'{leads=}')
+
 
 
 def lambda_handler(event:str, context:str):
