@@ -32,7 +32,6 @@ def syncDuplicates(ms:MarketoClient, email_pref:dict)->None:
     
     # build list of fields to extract
     fields = [k for k in email_pref.keys() if k not in ('record_saved_date')]
-    logger.info(fields)
 
 
 
@@ -46,6 +45,8 @@ def extractLeadsByEmailAddress(mc:MarketoClient, email_address:str, fields:list)
     :return List of dictionaries
     """
 
+    logger.info(f'{email_address=}')
+    logger.info(f'{fields=}')
     try:
         leads = mc.execute(method='get_multiple_leads_by_filter_type', filterType='email', 
                             filterValues=email_address, fields=fields)
@@ -53,6 +54,7 @@ def extractLeadsByEmailAddress(mc:MarketoClient, email_address:str, fields:list)
         logger.error(f'method: extractLeadsByEmailAddress()\n error: {str(e)}')
         raise e
     
+    logger.info(f'{leads=}')
     return leads
 
 
