@@ -19,7 +19,7 @@ from time import sleep
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-def syncDuplicates(ms:MarketoClient, email_pref:dict)->None:
+def syncDuplicates(mc:MarketoClient, email_pref:dict)->None:
     """ 
     Main function for synchronizing email preferefence fields of 
     duplicate Marketo leads (by email address)
@@ -32,6 +32,7 @@ def syncDuplicates(ms:MarketoClient, email_pref:dict)->None:
     
     # build list of fields to extract
     fields = [k for k in email_pref.keys() if k not in ('record_saved_date')]
+    extractLeadsByEmailAddress(mc, email_pref["email"], fields)
 
 
 
