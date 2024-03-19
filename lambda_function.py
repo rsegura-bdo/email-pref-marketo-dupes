@@ -34,6 +34,8 @@ def syncDuplicates(mc:MarketoClient, email_pref:dict)->None:
     fields = [k for k in email_pref.keys() if k not in ('record_saved_date')]
     dupes = extractLeadsByEmailAddress(mc, email_pref["email"], fields)
     logger.info(f'({email_pref["email"]}: {len(dupes)}) records found/extracted')
+    if len(dupes) <= 5:
+        logger.info(f'{dupes=}')
 
     # find duplicate records that need updates
     dupes_to_update = getLeadsToUpdate(email_pref, dupes)
