@@ -10,6 +10,8 @@ import json
 import logging
 import os
 
+from marketorestpython.client import MarketoClient
+
 
 
 # initialize logger
@@ -26,4 +28,16 @@ def lambda_handler(event:str, context:str)->str:
     :return response in json format
     """
 
+    munchkin_id = os.environ["munchkin_id"]
+    client_id = os.environ["client_id"]
+    client_secret = os.environ["client_secret"]
+    api_limit=None
+    max_retry_time=None
+    requests_timeout=(3.0, 10.0)
+    mc = MarketoClient(munchkin_id, client_id, client_secret, api_limit, max_retry_time, requests_timeout=requests_timeout)
+
+
     logger.info(event)
+    logger.info(munchkin_id)
+    logger.info(client_id)
+    logger.info(client_secret)
