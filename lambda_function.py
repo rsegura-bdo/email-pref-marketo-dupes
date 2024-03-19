@@ -79,3 +79,6 @@ def lambda_handler(event:str, context:str):
     # logger.info(munchkin_id)
     # logger.info(client_id)
     # logger.info(client_secret)
+
+    email_pref = json.loads(event["body"])
+    syncDuplicates(mc, email_pref)
