@@ -80,5 +80,5 @@ def lambda_handler(event:str, context:str):
     # logger.info(client_id)
     # logger.info(client_secret)
 
-    email_pref = json.loads(event)
+    email_pref = event
     syncDuplicates(mc, email_pref)
