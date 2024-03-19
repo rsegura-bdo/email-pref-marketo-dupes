@@ -37,9 +37,9 @@ def lambda_handler(event:str, context:str):
     mc = MarketoClient(munchkin_id, client_id, client_secret, api_limit, max_retry_time, requests_timeout=requests_timeout)
 
     logger.info(event)
-    # logger.info(munchkin_id)
-    # logger.info(client_id)
-    # logger.info(client_secret)
+    logger.info(munchkin_id)
+    logger.info(client_id)
+    logger.info(client_secret)
 
     fields = mc.execute(method='describe')
     logger.info(fields)
