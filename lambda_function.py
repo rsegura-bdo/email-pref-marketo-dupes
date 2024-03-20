@@ -83,7 +83,7 @@ def getLeadsToUpdate(email_preferences:dict, leads:list)->list:
     for lead in leads:
         for fld in pref_template.keys():
             if str(lead[fld]).lower() != str(pref_template[fld]).lower():
-                logger.info(f'{str(lead[fld]).lower()} != {str(pref_template[fld]).lower()}')
+                logger.info(f'MISMATCH DETECTED: {str(lead[fld]).lower()} != {str(pref_template[fld]).lower()}')
                 lead_dict = deepcopy(pref_template)
                 lead_dict["id"] = lead["id"]
                 leads_to_update.append(deepcopy(lead_dict))
