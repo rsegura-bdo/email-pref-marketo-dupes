@@ -65,6 +65,17 @@ def extractLeadsByEmailAddress(mc:MarketoClient, email_address:str, fields:list)
     return leads
 
 
+def cleanVal(val)->str:
+    """ 
+    simplifies value to compare as string
+
+    :param val: value to simplify
+    :return string
+    """
+
+    return str(val or '').lower()
+
+
 def getLeadsToUpdate(email_preferences:dict, leads:list)->list:
     """ 
     Export leads with matching email addresses
@@ -82,8 +93,8 @@ def getLeadsToUpdate(email_preferences:dict, leads:list)->list:
 
     for lead in leads:
         for fld in pref_template.keys():
-            if str(lead[fld]).lower() != str(pref_template[fld]).lower():
-                logger.info(f'MISMATCH DETECTED: {str(lead[fld]).lower()} != {str(pref_template[fld]).lower()}')
+            if cleanVal(lead[fld]) != cleanVal(pref_template[fld]):
+                logger.info(f'MISMATCH DETECTED: {cleanVal(lead[fld])} != {cleanVal(pref_template[fld])}')
                 lead_dict = deepcopy(pref_template)
                 lead_dict["id"] = lead["id"]
                 leads_to_update.append(deepcopy(lead_dict))
