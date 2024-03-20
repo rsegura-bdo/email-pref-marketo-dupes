@@ -119,7 +119,7 @@ def lambda_handler(event:str, context:str):
     :return None
     """
 
-    # sleep (5)     # sleep to give invoking call time to update updated lead 
+    sleep (10)     # sleep to give invoking call time to update updated lead 
 
     munchkin_id = os.environ["munchkin_id"]
     client_id = os.environ["client_id"]
