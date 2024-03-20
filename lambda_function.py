@@ -10,6 +10,7 @@ import json
 import logging
 import os
 
+from copy import deepcopy
 from marketorestpython.client import MarketoClient
 from time import sleep
 
@@ -39,6 +40,8 @@ def syncDuplicates(mc:MarketoClient, email_pref:dict)->None:
 
     # find duplicate records that need updates
     dupes_to_update = getLeadsToUpdate(email_pref, dupes)
+    logger.info(f'{len(dupes_to_update)=}')
+    logger.info(f'{dupes_to_update=}')
 
 
 
@@ -71,8 +74,22 @@ def getLeadsToUpdate(email_preferences:dict, leads:list)->list:
     :return List of dictionaries
     """
 
-    logger.info(f'{email_preferences=}')
+    leads_to_update = list()
 
+    fields_to_ignore = ['id', 'record_saved_date']
+
+    pref_template = {k:v for k, v in email_preferences.items() if k not in fields_to_ignore}
+
+    for lead in leads:
+        for fld in pref_template.keys():
+            if str(lead[fld]) != str(pref_template[fld]):
+                lead_dict = deepcopy(pref_template)
+                lead_dict["id"] = lead["id"]
+                leads_to_update.append(deepcopy(lead_dict))
+                lead_dict.clear
+                break
+
+    return leads_to_update
 
 
 def lambda_handler(event:str, context:str):
