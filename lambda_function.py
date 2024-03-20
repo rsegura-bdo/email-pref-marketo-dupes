@@ -43,6 +43,12 @@ def syncDuplicates(mc:MarketoClient, email_pref:dict)->None:
     logger.info(f'{len(dupes_to_update)=}')
     logger.info(f'{dupes_to_update=}')
 
+    if dupes_to_update:
+        try:
+            update_response = mc.execute(method='create_update_leads', leads=dupes_to_update, action='updateOnly', lookupField='id')
+        except Exception as e:
+            logger.error(f'An error occurred trying to update records: {str(e)}')
+            raise e
 
 
 def extractLeadsByEmailAddress(mc:MarketoClient, email_address:str, fields:list) -> list:
